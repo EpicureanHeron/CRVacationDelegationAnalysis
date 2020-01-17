@@ -11,6 +11,7 @@ def __main__():
     parser.add_argument('rawdata', help='File to Process', widget='FileChooser')
     parser.add_argument('outputDir', help='Select Output Directory', widget='DirChooser')
     parser.add_argument('outputFile', help="Output File Name", widget='Textarea')
+    parser.add_argument('RRC', help='RRC', widget='Textarea', default='all')
     # parser.add_argument('username', help="Username", widget='CommandField')
     # parser.add_argument('password', help="***********", widget='PasswordField')
 
@@ -28,7 +29,7 @@ def __main__():
     
        
     
-    analyze.expenseLines(args.rawdata, args.outputDir, args.outputFile)
+    analyze.expenseLines(args.rawdata, args.outputDir, args.outputFile, args.RRC)
         
       
 
