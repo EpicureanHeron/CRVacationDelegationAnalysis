@@ -1,6 +1,5 @@
 import pandas as pd
 import datetime
-import pprint
 
 def expenseLines(fileName, outputDir, outputFile, RRC):
 
@@ -8,10 +7,7 @@ def expenseLines(fileName, outputDir, outputFile, RRC):
 
     data = pd.read_excel(fileName)
 
-    # if len(args) > 0:
-    #     data.rename(columns={'RRC Code': 'RRC'}, inplace = True)
-    #     data = data.query('RRC == "%s"' % (args[0]))
-    #     data.rename(columns={'RRC': 'RRC Code'}, inplace = True)
+    ## filters by RRC OR if ALL is left in, grabs everything
 
     if RRC != 'all':
 
@@ -20,9 +16,14 @@ def expenseLines(fileName, outputDir, outputFile, RRC):
     else:
 
         filteredByRRC = data
-    # creats the summary tab
+    
+    ## filters by today's datetime object
 
-    print('finished analysis...')
+    today = datetime.date.today()
+
+    greaterThanToday = filteredByRRC.query('EndDate > "%s"' % today)
+
+    # creats output file
 
 
     outfile = outputDir + "\\" + outputFile + '.xlsx'
@@ -31,7 +32,7 @@ def expenseLines(fileName, outputDir, outputFile, RRC):
         
     writer = pd.ExcelWriter(outfile, engine='openpyxl')
 
-    df = pd.DataFrame(filteredByRRC)
+    df = pd.DataFrame(greaterThanToday)
 
     df.to_excel(writer)
 
